@@ -1,5 +1,6 @@
 body { background-color:  #FFFFE0; /* warna kuning cerah */
 font-family : arial,sans-serif; /* jenis huruf yang bersih dan mudah di baca */ 
+      color: #191970; 
      }
       .kartu-profil {
         width: 300px;
