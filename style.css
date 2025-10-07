@@ -190,3 +190,100 @@ body {
 }
 
 /* ... (Kode styling tujuan-list dan footer tetap sama) ... */
+/* ========================================================= */
+/* 2. KARTU PROFIL & ANIMASI FADE-IN (Modifikasi & Tambahan) */
+/* ========================================================= */
+
+.kartu-profil {
+    /* ... (Properti yang sudah ada) ... */
+    
+    /* Tambahkan perspektif pada parent untuk efek 3D yang lebih baik */
+    transform-style: preserve-3d; 
+    
+    /* Efek transisi untuk interaksi */
+    /* Ubah transisi transform: gunakan 'transform' dan 'box-shadow' yang lebih eksplisit */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border 0.3s ease; 
+    border: 2px solid transparent; 
+
+    /* Animasi Fade-In saat dimuat */
+    opacity: 0; 
+    animation: fadeIn 1.5s ease-out 0.5s forwards; 
+    
+    /* Tambahan untuk efek tilt 3D */
+    position: relative; /* Penting untuk pseudo-element */
+    z-index: 1; /* Agar berada di atas pseudo-element shadow */
+}
+
+/* Shadow 3D yang lembut di bawah kartu */
+.kartu-profil::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    background: transparent;
+    box-shadow: 0 50px 80px rgba(0, 0, 0, 0.4); /* Shadow besar, lembut */
+    transform: translateZ(-20px) scale(0.95); /* Pindahkan ke belakang dan perkecil */
+    opacity: 0; /* Mulai tersembunyi */
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: -1;
+}
+
+
+/* Efek saat mouse di atas kartu */
+.kartu-profil:hover {
+    /* Transformasi hover yang sudah ada diubah sedikit */
+    transform: translateY(-10px) rotateX(2deg) rotateY(-2deg); /* Naik dan sedikit miring (tilt) */
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+    border-color: #3498DB; 
+}
+
+/* Animasi Shadow 3D saat hover */
+.kartu-profil:hover::before {
+    transform: translateZ(-10px) scale(1.05); /* Sedikit maju, membesar */
+    opacity: 1; /* Tampilkan shadow */
+}
+.kartu-profil h1,
+.kartu-profil p,
+.kartu-profil h2,
+.kartu-profil .link-container {
+    opacity: 0; /* Sembunyikan semua elemen internal */
+    /* Animasi slideUpFadeIn, dengan delay yang berbeda (stagger) */
+    animation: slideUpFadeIn 0.8s ease-out forwards;
+}
+
+/* Staggered Delay */
+.kartu-profil img {
+    /* Gambar profil sudah memiliki animasinya sendiri, jadi atur delay-nya */
+    animation-delay: 1.0s; 
+}
+
+.kartu-profil h1 {
+    animation-delay: 1.3s; /* Setelah kartu muncul, gambar muncul, lalu nama muncul */
+}
+
+.kartu-profil p {
+    animation-delay: 1.4s;
+}
+
+.kartu-profil h2 {
+    animation-delay: 1.5s;
+}
+
+.kartu-profil .skill-grid {
+    animation-delay: 1.7s;
+}
+
+.kartu-profil .link-container {
+    animation-delay: 1.8s;
+}
+/* ========================================================= */
+/* 7. ANIMASI STAGGERED ENTRANCE BARU */
+/* ========================================================= */
+
+@keyframes slideUpFadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
