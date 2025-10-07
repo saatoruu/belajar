@@ -1,18 +1,20 @@
-body { background-color:  #FFFFE0; /* warna kuning cerah */
-font-family : arial,sans-serif; /* jenis huruf yang bersih dan mudah di baca */ 
-      color: #191970; 
-     }
-      .kartu-profil {
-        width: 300px;
-        margin:50px   auto; /* 50px jarak atas/bawah,auto menegahkan
-        kiri/kanan */
-padding: 20px;
-        background-color:white;
-        border-radius: 15px; /*membuat sudut menjadi melengkung */
-        box-shadow:0 4px 8px rgba(0,0,0,0,1); /*efek bayangan */
-      }
+body {
+    background-color: #00FFFF;
+    font-family: Arial, sans-serif;
+    color: #191970;
+}
+
 .kartu-profil {
-width:150px; 
-  /* ... (kode dari slide sebelumnya) ... */
-  text-align:center; /* menengahkan smua teks di dalam kartu */
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    text-align: center;
+}
+
+.kartu-profil img {
+    width: 150px;
+    border-radius: 50%;
 }
