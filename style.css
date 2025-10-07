@@ -5,15 +5,16 @@
 body {
     background: linear-gradient(-45deg, #2c3e50, #3498DB, #2980b9, #1abc9c);
     background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite; 
-    
-    font-family: 'Poppins', sans-serif; 
-    color: #34495e; 
-    
+    animation: gradientShift 15s ease infinite;
+
+    font-family: 'Poppins', sans-serif;
+    color: #34495e;
+
+    /* Proper Centering using Flexbox */
     display: flex;
-    justify-content: center; 
-    align-items: center; 
-    min-height: 100vh; 
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     margin: 0;
 }
 
@@ -24,7 +25,7 @@ body {
 }
 
 /* ========================================================= */
-/* 2. KARTU PROFIL & ANIMASI FADE-IN */
+/* 2. KARTU PROFIL & ANIMASI FADE-IN (Termasuk Efek Tilt 3D) */
 /* ========================================================= */
 
 .kartu-profil {
@@ -32,17 +33,41 @@ body {
     padding: 30px;
     background-color: #ffffff;
     border-radius: 15px;
-    
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); /* Shadow lebih kuat */
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     text-align: center;
-    
-    /* Efek transisi untuk interaksi */
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-    border: 2px solid transparent; 
+
+    /* Tambahkan perspektif untuk efek 3D yang lebih baik */
+    transform-style: preserve-3d;
+
+    /* Efek transisi yang diperbarui */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border 0.3s ease;
+    border: 2px solid transparent;
 
     /* Animasi Fade-In saat dimuat */
-    opacity: 0; 
-    animation: fadeIn 1.5s ease-out 0.5s forwards; 
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out 0.5s forwards;
+
+    /* Tambahan untuk efek tilt 3D */
+    position: relative;
+    z-index: 1;
+}
+
+/* Shadow 3D yang lembut di bawah kartu */
+.kartu-profil::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    background: transparent;
+    box-shadow: 0 50px 80px rgba(0, 0, 0, 0.4);
+    transform: translateZ(-20px) scale(0.95);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: -1;
 }
 
 @keyframes fadeIn {
@@ -50,11 +75,17 @@ body {
     100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Efek saat mouse di atas kartu */
+/* Efek saat mouse di atas kartu (Hover Tilt 3D) */
 .kartu-profil:hover {
-    transform: translateY(-8px) scale(1.03); /* Naik dan membesar lebih dramatis */
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
-    border-color: #3498DB; 
+    transform: translateY(-10px) rotateX(2deg) rotateY(-2deg); /* Naik dan sedikit miring (tilt) */
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+    border-color: #3498DB;
+}
+
+/* Animasi Shadow 3D saat hover */
+.kartu-profil:hover::before {
+    transform: translateZ(-10px) scale(1.05);
+    opacity: 1;
 }
 
 /* ========================================================= */
@@ -62,28 +93,87 @@ body {
 /* ========================================================= */
 
 .kartu-profil img {
-    width: 180px; 
+    width: 180px;
     height: 180px;
     object-fit: cover;
-    
-    border-radius: 10px; /* Bentuk Kotak */
-    
-    /* Mengganti border solid dengan box-shadow sebagai border berwarna */
-    box-shadow: 0 0 0 5px #3498DB, 0 0 15px rgba(52, 152, 219, 0.5); 
-    
+
+    border-radius: 10px;
+
+    /* Border berwarna */
+    box-shadow: 0 0 0 5px #3498DB, 0 0 15px rgba(52, 152, 219, 0.5);
+
     padding: 3px;
     margin-bottom: 20px;
-    
+
     transition: transform 0.4s ease, box-shadow 0.4s ease;
+    
+    /* Tambahan: Persiapan untuk Staggered Entrance */
+    opacity: 0; 
+    animation: slideUpFadeIn 0.8s ease-out forwards; 
+    animation-delay: 1.0s; 
 }
 
 .kartu-profil img:hover {
-    transform: scale(1.05) rotate(-2deg); /* Efek zoom dan rotasi kecil */
-    box-shadow: 0 0 0 8px #2ecc71, 0 0 20px rgba(46, 204, 113, 0.7); /* Ganti warna border saat hover */
+    transform: scale(1.05) rotate(-2deg);
+    box-shadow: 0 0 0 8px #2ecc71, 0 0 20px rgba(46, 204, 113, 0.7);
 }
 
-/* ... (Kode styling h1, p, h2, minat-list, tujuan-list, footer tetap sama) ... */
+/* ========================================================= */
+/* 4. STYLING TEKS */
+/* ========================================================= */
 
+.kartu-profil h1,
+.kartu-profil p,
+.kartu-profil h2,
+.kartu-profil .link-container {
+    /* Persiapan untuk Staggered Entrance */
+    opacity: 0;
+    animation: slideUpFadeIn 0.8s ease-out forwards;
+}
+
+.kartu-profil h1 {
+    font-size: 1.8em;
+    margin-bottom: 5px;
+    animation-delay: 1.3s; /* Staggered Delay */
+}
+
+.kartu-profil p {
+    font-style: italic;
+    margin-bottom: 25px;
+    animation-delay: 1.4s; /* Staggered Delay */
+}
+
+.kartu-profil h2 {
+    font-size: 1.2em;
+    color: #2c3e50;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 8px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    animation-delay: 1.5s; /* Staggered Delay */
+}
+
+/* ========================================================= */
+/* 5. DAFTAR MINAT/TUJUAN */
+/* ========================================================= */
+
+.minat-list, .tujuan-list {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0 0;
+    text-align: left;
+}
+
+.minat-list li, .tujuan-list li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #ecf0f1;
+    font-size: 0.95em;
+    color: #7f8c8d;
+}
+
+.minat-list li:last-child, .tujuan-list li:last-child {
+    border-bottom: none;
+}
 
 /* ========================================================= */
 /* 6. SOFT SKILL (Grid Badges + Animasi Shimmer) */
@@ -95,18 +185,23 @@ body {
     gap: 8px;
     justify-content: center;
     margin-bottom: 25px;
+    
+    /* Tambahan: Persiapan untuk Staggered Entrance */
+    opacity: 0; 
+    animation: slideUpFadeIn 0.8s ease-out forwards; 
+    animation-delay: 1.7s; /* Staggered Delay */
 }
 
 .skill-badge {
-    background-color: #2ecc71; 
+    background-color: #2ecc71;
     color: white;
     padding: 6px 10px;
-    border-radius: 5px; 
+    border-radius: 5px;
     font-size: 0.8em;
     font-weight: 600;
     transition: background-color 0.3s ease;
-    
-    /* Animasi Shimmer Baru: membuat skill badge terlihat lebih premium */
+
+    /* Animasi Shimmer Baru */
     position: relative;
     overflow: hidden;
 }
@@ -129,7 +224,16 @@ body {
 }
 
 /* ========================================================= */
-/* 8. LINK & BUTTONS (Efek Ripple untuk Button) */
+/* 7. ANIMASI STAGGERED ENTRANCE */
+/* ========================================================= */
+
+@keyframes slideUpFadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================================= */
+/* 8. LINK & BUTTONS (Efek Ripple & Pulse) */
 /* ========================================================= */
 
 .link-container {
@@ -137,7 +241,10 @@ body {
     flex-direction: column;
     gap: 10px;
     margin-top: 25px;
-    position: relative; /* Diperlukan untuk efek ripple/pulse */
+    position: relative;
+    
+    /* Staggered Delay */
+    animation-delay: 1.8s;
 }
 
 .link-container a, #sapaButton {
@@ -149,12 +256,12 @@ body {
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
-    overflow: hidden; /* Penting untuk menyembunyikan bagian ripple yang keluar */
+    overflow: hidden;
 }
 
 /* Tombol Instagram */
 .link-container a {
-    background-color: #e1306c; 
+    background-color: #e1306c;
     color: white;
     border: none;
 }
@@ -167,19 +274,19 @@ body {
 
 /* Tombol Sapa Saya! */
 #sapaButton {
-    background-color: #3498DB; 
+    background-color: #3498DB;
     color: white;
     border: none;
     cursor: pointer;
 
-    /* Animasi Pulse tetap ada */
-    animation: pulse 2s infinite; 
+    /* Animasi Pulse */
+    animation: pulse 2s infinite;
 }
 
 #sapaButton:hover {
     background-color: #2980b9;
     transform: scale(0.98);
-    animation: none; /* Hentikan pulse saat di-hover */
+    animation: none;
 }
 
 /* Keyframes untuk Animasi Pulse */
@@ -189,101 +296,13 @@ body {
     100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
 }
 
-/* ... (Kode styling tujuan-list dan footer tetap sama) ... */
 /* ========================================================= */
-/* 2. KARTU PROFIL & ANIMASI FADE-IN (Modifikasi & Tambahan) */
-/* ========================================================= */
-
-.kartu-profil {
-    /* ... (Properti yang sudah ada) ... */
-    
-    /* Tambahkan perspektif pada parent untuk efek 3D yang lebih baik */
-    transform-style: preserve-3d; 
-    
-    /* Efek transisi untuk interaksi */
-    /* Ubah transisi transform: gunakan 'transform' dan 'box-shadow' yang lebih eksplisit */
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border 0.3s ease; 
-    border: 2px solid transparent; 
-
-    /* Animasi Fade-In saat dimuat */
-    opacity: 0; 
-    animation: fadeIn 1.5s ease-out 0.5s forwards; 
-    
-    /* Tambahan untuk efek tilt 3D */
-    position: relative; /* Penting untuk pseudo-element */
-    z-index: 1; /* Agar berada di atas pseudo-element shadow */
-}
-
-/* Shadow 3D yang lembut di bawah kartu */
-.kartu-profil::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 15px;
-    background: transparent;
-    box-shadow: 0 50px 80px rgba(0, 0, 0, 0.4); /* Shadow besar, lembut */
-    transform: translateZ(-20px) scale(0.95); /* Pindahkan ke belakang dan perkecil */
-    opacity: 0; /* Mulai tersembunyi */
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: -1;
-}
-
-
-/* Efek saat mouse di atas kartu */
-.kartu-profil:hover {
-    /* Transformasi hover yang sudah ada diubah sedikit */
-    transform: translateY(-10px) rotateX(2deg) rotateY(-2deg); /* Naik dan sedikit miring (tilt) */
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
-    border-color: #3498DB; 
-}
-
-/* Animasi Shadow 3D saat hover */
-.kartu-profil:hover::before {
-    transform: translateZ(-10px) scale(1.05); /* Sedikit maju, membesar */
-    opacity: 1; /* Tampilkan shadow */
-}
-.kartu-profil h1,
-.kartu-profil p,
-.kartu-profil h2,
-.kartu-profil .link-container {
-    opacity: 0; /* Sembunyikan semua elemen internal */
-    /* Animasi slideUpFadeIn, dengan delay yang berbeda (stagger) */
-    animation: slideUpFadeIn 0.8s ease-out forwards;
-}
-
-/* Staggered Delay */
-.kartu-profil img {
-    /* Gambar profil sudah memiliki animasinya sendiri, jadi atur delay-nya */
-    animation-delay: 1.0s; 
-}
-
-.kartu-profil h1 {
-    animation-delay: 1.3s; /* Setelah kartu muncul, gambar muncul, lalu nama muncul */
-}
-
-.kartu-profil p {
-    animation-delay: 1.4s;
-}
-
-.kartu-profil h2 {
-    animation-delay: 1.5s;
-}
-
-.kartu-profil .skill-grid {
-    animation-delay: 1.7s;
-}
-
-.kartu-profil .link-container {
-    animation-delay: 1.8s;
-}
-/* ========================================================= */
-/* 7. ANIMASI STAGGERED ENTRANCE BARU */
+/* 9. FOOTER */
 /* ========================================================= */
 
-@keyframes slideUpFadeIn {
-    0% { opacity: 0; transform: translateY(10px); }
-    100% { opacity: 1; transform: translateY(0); }
+.footer {
+    margin-top: 30px;
+    font-size: 0.8em;
+    color: #95a5a6;
+    animation-delay: 1.9s; /* Staggered Delay */
 }
