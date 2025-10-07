@@ -1,20 +1,258 @@
+/* ========================================================= */
+/* 1. BODY & BACKGROUND ANIMATION */
+/* ========================================================= */
+
 body {
-    background-color: #3498DB;
-    font-family: Arial, sans-serif;
-    color: #191970;
+    /* Mengganti warna solid dengan gradien animasi yang halus */
+    background: linear-gradient(-45deg, #2c3e50, #3498DB, #2980b9, #1abc9c);
+    background-size: 400% 400%; /* Ukuran lebih besar dari viewport untuk animasi */
+    animation: gradientShift 15s ease infinite; /* Animasi berulang selama 15 detik */
+    
+    font-family: 'Poppins', sans-serif; /* Menggunakan font yang lebih modern */
+    color: #34495e; /* Warna teks utama */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
+
+/* Keyframes untuk Animasi Background */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ========================================================= */
+/* 2. KARTU PROFIL & EFECT HOVER */
+/* ========================================================= */
 
 .kartu-profil {
     width: 300px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: white;
+    margin: 40px auto; /* Margin sedikit di atas/bawah */
+    padding: 30px;
+    background-color: #ffffff;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    
+    /* Box Shadow yang lebih halus dan elegan */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     text-align: center;
+    
+    /* Efek Transisi untuk Hover */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent; /* Border awal */
 }
 
+/* Efek saat mouse di atas kartu */
+.kartu-profil:hover {
+    transform: translateY(-5px) scale(1.02); /* Sedikit naik dan membesar */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    border-color: #3498DB; /* Border warna saat hover */
+}
+
+/* ========================================================= */
+/* 3. GAMBAR PROFIL & JUDUL */
+/* ========================================================= */
+
 .kartu-profil img {
-    width: 200px;
-    border-radius: 3%;
+    width: 180px; /* Ukuran gambar sedikit diubah */
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%; /* Dibuat lingkaran */
+    border: 5px solid #3498DB;
+    padding: 3px;
+    margin-bottom: 20px;
+    
+    /* Efek Hover pada gambar */
+    transition: transform 0.3s ease;
+}
+
+.kartu-profil img:hover {
+    transform: rotate(3deg); /* Gambar berputar sedikit */
+}
+
+.kartu-profil h1 {
+    color: #2c3e50; /* Warna nama yang kuat */
+    font-size: 1.8em;
+    margin-bottom: 5px;
+}
+
+.kartu-profil p {
+    color: #7f8c8d;
+    font-size: 0.95em;
+    margin-bottom: 25px;
+}
+
+/* ========================================================= */
+/* 4. HEADING SECTION */
+/* ========================================================= */
+
+.kartu-profil h2 {
+    color: #3498DB;
+    border-bottom: 2px solid #ecf0f1; /* Garis bawah halus */
+    padding-bottom: 5px;
+    margin-top: 30px;
+    font-size: 1.2em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* ========================================================= */
+/* 5. MINAT & KEAHLIAN (List) */
+/* ========================================================= */
+
+.minat-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.minat-list li {
+    padding: 8px 0;
+    border-bottom: 1px dotted #bdc3c7; /* Garis putus-putus */
+    color: #555;
+    font-size: 0.9em;
+}
+
+.minat-list li i {
+    color: #3498DB;
+    margin-right: 10px;
+    transition: color 0.2s;
+}
+
+.minat-list li:hover i {
+    color: #e74c3c; /* Ganti warna ikon saat hover */
+}
+
+/* ========================================================= */
+/* 6. SOFT SKILL (Grid Badges) */
+/* ========================================================= */
+
+.skill-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.skill-badge {
+    background-color: #2ecc71; /* Warna hijau cerah */
+    color: white;
+    padding: 6px 10px;
+    border-radius: 5px; /* Sudut sedikit kotak */
+    font-size: 0.8em;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.skill-badge:hover {
+    background-color: #27ae60;
+    cursor: default;
+}
+
+/* ========================================================= */
+/* 7. TUJUAN KARIR (Ordered List) */
+/* ========================================================= */
+
+.tujuan-list {
+    list-style-type: none; /* Hilangkan default nomor */
+    padding: 0;
+    text-align: left;
+    counter-reset: goal-counter; /* Reset penghitung */
+    margin-bottom: 25px;
+}
+
+.tujuan-list li {
+    padding: 5px 0 5px 30px;
+    position: relative;
+    color: #555;
+    font-size: 0.9em;
+}
+
+/* Membuat penomoran kustom dengan CSS */
+.tujuan-list li::before {
+    counter-increment: goal-counter;
+    content: counter(goal-counter);
+    position: absolute;
+    left: 0;
+    top: 5px;
+    background-color: #e67e22; /* Warna oranye untuk nomor */
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+/* ========================================================= */
+/* 8. LINK & BUTTONS */
+/* ========================================================= */
+
+.link-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.link-container a, #sapaButton {
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tombol Instagram */
+.link-container a {
+    background-color: #e1306c; /* Warna mirip Instagram */
+    color: white;
+    border: none;
+}
+
+.link-container a:hover {
+    background-color: #c13584;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Tombol Sapa Saya! */
+#sapaButton {
+    background-color: #3498DB; 
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#sapaButton:hover {
+    background-color: #2980b9;
+    transform: scale(0.98);
+}
+
+/* ========================================================= */
+/* 9. FOOTER */
+/* ========================================================= */
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    color: rgba(255, 255, 255, 0.8); /* Warna putih transparan agar terlihat di background gradien */
+    font-size: 0.85em;
+    width: 100%;
 }
