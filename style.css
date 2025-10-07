@@ -32,30 +32,45 @@ body {
 }
 
 /* ========================================================= */
-/* 2. KARTU PROFIL & EFECT HOVER */
+/* 2. KARTU PROFIL & EFECT HOVER + ANIMASI FADE-IN BARU */
 /* ========================================================= */
 
 .kartu-profil {
     width: 300px;
-    margin: 40px auto; /* Margin sedikit di atas/bawah */
+    margin: 40px auto; 
     padding: 30px;
     background-color: #ffffff;
     border-radius: 15px;
     
-    /* Box Shadow yang lebih halus dan elegan */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     text-align: center;
     
-    /* Efek Transisi untuk Hover */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 2px solid transparent; /* Border awal */
+    border: 2px solid transparent; 
+
+    /* ANIMASI FADE-IN BARU */
+    opacity: 0; /* Mulai dari tidak terlihat */
+    animation: fadeIn 1.5s ease-out 0.5s forwards; /* Durasi 1.5s, Tunda 0.5s, dan pertahankan status akhir */
 }
+
+/* Keyframes untuk Animasi Fade-In */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px); /* Muncul dari bawah */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 /* Efek saat mouse di atas kartu */
 .kartu-profil:hover {
-    transform: translateY(-5px) scale(1.02); /* Sedikit naik dan membesar */
+    transform: translateY(-5px) scale(1.02); 
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-    border-color: #3498DB; /* Border warna saat hover */
+    border-color: #3498DB; 
 }
 
 /* ========================================================= */
@@ -63,24 +78,23 @@ body {
 /* ========================================================= */
 
 .kartu-profil img {
-    width: 180px; /* Ukuran gambar sedikit diubah */
+    width: 180px; 
     height: 180px;
     object-fit: cover;
-    border-radius: 50%; /* Dibuat lingkaran */
+    border-radius: 50%; 
     border: 5px solid #3498DB;
     padding: 3px;
     margin-bottom: 20px;
     
-    /* Efek Hover pada gambar */
     transition: transform 0.3s ease;
 }
 
 .kartu-profil img:hover {
-    transform: rotate(3deg); /* Gambar berputar sedikit */
+    transform: rotate(3deg); 
 }
 
 .kartu-profil h1 {
-    color: #2c3e50; /* Warna nama yang kuat */
+    color: #2c3e50; 
     font-size: 1.8em;
     margin-bottom: 5px;
 }
@@ -97,7 +111,7 @@ body {
 
 .kartu-profil h2 {
     color: #3498DB;
-    border-bottom: 2px solid #ecf0f1; /* Garis bawah halus */
+    border-bottom: 2px solid #ecf0f1; 
     padding-bottom: 5px;
     margin-top: 30px;
     font-size: 1.2em;
@@ -118,7 +132,7 @@ body {
 
 .minat-list li {
     padding: 8px 0;
-    border-bottom: 1px dotted #bdc3c7; /* Garis putus-putus */
+    border-bottom: 1px dotted #bdc3c7; 
     color: #555;
     font-size: 0.9em;
 }
@@ -130,7 +144,7 @@ body {
 }
 
 .minat-list li:hover i {
-    color: #e74c3c; /* Ganti warna ikon saat hover */
+    color: #e74c3c; 
 }
 
 /* ========================================================= */
@@ -146,10 +160,10 @@ body {
 }
 
 .skill-badge {
-    background-color: #2ecc71; /* Warna hijau cerah */
+    background-color: #2ecc71; 
     color: white;
     padding: 6px 10px;
-    border-radius: 5px; /* Sudut sedikit kotak */
+    border-radius: 5px; 
     font-size: 0.8em;
     font-weight: 600;
     transition: background-color 0.3s ease;
@@ -165,10 +179,10 @@ body {
 /* ========================================================= */
 
 .tujuan-list {
-    list-style-type: none; /* Hilangkan default nomor */
+    list-style-type: none; 
     padding: 0;
     text-align: left;
-    counter-reset: goal-counter; /* Reset penghitung */
+    counter-reset: goal-counter; 
     margin-bottom: 25px;
 }
 
@@ -179,14 +193,13 @@ body {
     font-size: 0.9em;
 }
 
-/* Membuat penomoran kustom dengan CSS */
 .tujuan-list li::before {
     counter-increment: goal-counter;
     content: counter(goal-counter);
     position: absolute;
     left: 0;
     top: 5px;
-    background-color: #e67e22; /* Warna oranye untuk nomor */
+    background-color: #e67e22; 
     color: white;
     width: 20px;
     height: 20px;
@@ -198,7 +211,7 @@ body {
 }
 
 /* ========================================================= */
-/* 8. LINK & BUTTONS */
+/* 8. LINK & BUTTONS + ANIMASI PULSE BARU */
 /* ========================================================= */
 
 .link-container {
@@ -220,7 +233,7 @@ body {
 
 /* Tombol Instagram */
 .link-container a {
-    background-color: #e1306c; /* Warna mirip Instagram */
+    background-color: #e1306c; 
     color: white;
     border: none;
 }
@@ -237,11 +250,28 @@ body {
     color: white;
     border: none;
     cursor: pointer;
+
+    /* ANIMASI PULSE BARU */
+    animation: pulse 2s infinite; 
 }
 
 #sapaButton:hover {
     background-color: #2980b9;
     transform: scale(0.98);
+    animation: none; /* Hentikan pulse saat di-hover */
+}
+
+/* Keyframes untuk Animasi Pulse */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7); /* Warna bayangan sesuai tombol */
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); /* Bayangan melebar dan menghilang */
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+    }
 }
 
 /* ========================================================= */
@@ -252,7 +282,7 @@ footer {
     text-align: center;
     margin-top: 20px;
     padding: 10px;
-    color: rgba(255, 255, 255, 0.8); /* Warna putih transparan agar terlihat di background gradien */
+    color: rgba(255, 255, 255, 0.8); 
     font-size: 0.85em;
     width: 100%;
 }
