@@ -64,3 +64,20 @@ input[type="text"], input[type="number"] {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+/* Aturan dasar untuk footer */
+footer {
+    text-align: center; /* Teks rata tengah */
+    margin-top: 30px; /* Jarak dari konten di atasnya */
+    padding: 15px; /* Ruang di dalam footer */
+    background-color: #333; /* Warna latar belakang gelap */
+    color: #fff; /* Warna teks putih */
+    border-radius: 4px; /* Sudut melengkung */
+    font-size: 0.9em; /* Ukuran font sedikit lebih kecil */
+    width: 100%; /* Lebar penuh */
+    box-sizing: border-box; /* Memastikan padding tidak menambah lebar total */
+}
+
+/* Gaya untuk teks di dalam footer (misalnya, nama developer) */
+footer p {
+    margin: 0; /* Menghapus margin bawaan paragraf */
+}
