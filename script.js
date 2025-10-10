@@ -6,15 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalHargaSpan = document.getElementById('total-harga');
     const bayarBtn = document.getElementById('bayar-btn');
 
-    // Fungsi untuk mengupdate total harga
+    // --- FUNGSI UTAMA UNTUK UPDATE & LOGIKA ---
+
     function updateTotal() {
         let total = 0;
-        // Ambil semua elemen subtotal dari keranjang
         const subtotalElements = itemKeranjangBody.querySelectorAll('.subtotal-item');
         
         subtotalElements.forEach(element => {
-            // Hapus "Rp" dan koma, lalu konversi ke angka
-            const subtotalText = element.textContent.replace('Rp ', '').replace('.', '');
+            // Hapus "Rp", spasi, dan titik (separator ribuan), lalu konversi ke angka
+            const subtotalText = element.textContent.replace('Rp ', '').replace(/\./g, '');
             total += parseInt(subtotalText);
         });
 
@@ -22,16 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
         totalHargaSpan.textContent = 'Rp ' + total.toLocaleString('id-ID');
     }
 
-    // Fungsi untuk menangani perubahan jumlah (quantity)
     function handleQuantityChange(event) {
         const input = event.target;
         const newQuantity = parseInt(input.value);
-        const row = input.closest('tr'); // Dapatkan baris (tr)
-        const hargaSatuan = parseInt(row.dataset.harga); // Ambil harga satuan yang disimpan di data-harga
+        const row = input.closest('tr');
+        const hargaSatuan = parseInt(row.dataset.harga);
         const subtotalElement = row.querySelector('.subtotal-item');
 
         if (newQuantity < 1) {
-            input.value = 1; // Pastikan minimal 1
+            input.value = 1;
             return;
         }
 
@@ -40,6 +39,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateTotal();
     }
+
+    // Fungsi untuk menambahkan baris produk baru ke tabel
+    function addProductRow(nama, harga, jumlahAwal = 1) {
+        const newRow = document.createElement('tr');
+        newRow.dataset.harga = harga; 
+        
+        const subtotalAwal = harga * jumlahAwal;
+
+        newRow.innerHTML = `
+            <td>${nama}</td>
+            <td>Rp ${harga.toLocaleString('id-ID')}</td>
+            <td><input type="number" value="${jumlahAwal}" min="1" class="quantity-input" style="width: 60px;"></td>
+            <td class="subtotal-item">Rp ${subtotalAwal.toLocaleString('id-ID')}</td>
+            <td><button class="hapus-btn">Hapus</button></td>
+        `;
+
+        itemKeranjangBody.appendChild(newRow);
+
+        // Tambahkan event listener untuk input jumlah (quantity)
+        const quantityInput = newRow.querySelector('.quantity-input');
+        quantityInput.addEventListener('change', handleQuantityChange);
+        quantityInput.addEventListener('input', handleQuantityChange); // Tambah event input juga
+
+        // Tambahkan event listener untuk tombol Hapus
+        const hapusBtn = newRow.querySelector('.hapus-btn');
+        hapusBtn.addEventListener('click', function() {
+            newRow.remove();
+            updateTotal();
+        });
+
+        updateTotal();
+    }
+
+    // --- FITUR BARU: MENAMBAHKAN PRODUK SECARA OTOMATIS ---
+    function tambahProdukDefault() {
+        // Contoh produk default yang akan ditambahkan saat start
+        const produkDefault = [
+            { nama: "Mie Instan Goreng", harga: 3500, jumlah: 2 },
+            { nama: "Susu Kotak Coklat", harga: 6000, jumlah: 1 },
+            { nama: "Kopi Sachet", harga: 1500, jumlah: 5 }
+        ];
+
+        produkDefault.forEach(produk => {
+            addProductRow(produk.nama, produk.harga, produk.jumlah);
+        });
+    }
+
+    // --- EVENT LISTENERS PENGGUNA ---
 
     // Event Listener untuk tombol "Tambahkan ke Keranjang"
     tambahProdukBtn.addEventListener('click', () => {
@@ -50,41 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Silakan masukkan nama produk dan harga yang valid.");
             return;
         }
-
-        // 1. Buat baris baru untuk item
-        const newRow = document.createElement('tr');
-        // Simpan harga satuan di atribut data (penting untuk perhitungan)
-        newRow.dataset.harga = harga; 
         
-        // 2. Isi baris dengan data dan kontrol
-        const subtotalAwal = harga * 1;
+        addProductRow(nama, harga, 1); // Tambahkan dengan jumlah awal 1
 
-        newRow.innerHTML = `
-            <td>${nama}</td>
-            <td>Rp ${harga.toLocaleString('id-ID')}</td>
-            <td><input type="number" value="1" min="1" class="quantity-input" style="width: 60px;"></td>
-            <td class="subtotal-item">Rp ${subtotalAwal.toLocaleString('id-ID')}</td>
-            <td><button class="hapus-btn">Hapus</button></td>
-        `;
-
-        // 3. Tambahkan baris ke tabel
-        itemKeranjangBody.appendChild(newRow);
-
-        // 4. Tambahkan event listener untuk input jumlah (quantity)
-        const quantityInput = newRow.querySelector('.quantity-input');
-        quantityInput.addEventListener('change', handleQuantityChange);
-
-        // 5. Tambahkan event listener untuk tombol Hapus
-        const hapusBtn = newRow.querySelector('.hapus-btn');
-        hapusBtn.addEventListener('click', function() {
-            newRow.remove(); // Hapus baris dari DOM
-            updateTotal(); // Perbarui total setelah penghapusan
-        });
-
-        // 6. Perbarui total harga
-        updateTotal();
-
-        // 7. Bersihkan input
+        // Bersihkan input
         namaProdukInput.value = '';
         hargaProdukInput.value = '0';
         namaProdukInput.focus();
@@ -97,10 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Keranjang belanja masih kosong!");
         } else {
             alert(`Total yang harus dibayar adalah: ${totalText}. Terima kasih!`);
-            // Di sini Anda bisa menambahkan logika untuk reset keranjang atau proses pembayaran
+            // Di sini Anda bisa menambahkan logika untuk reset keranjang
+            itemKeranjangBody.innerHTML = '';
+            updateTotal();
         }
     });
 
-    // Panggil updateTotal saat pertama kali halaman dimuat
-    updateTotal(); 
+    // Panggil fungsi untuk menambahkan produk default saat halaman dimuat
+    tambahProdukDefault();
 });
