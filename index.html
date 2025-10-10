@@ -54,3 +54,63 @@
     <script src="script.js"></script> 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Kasir Interaktif</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+
+    <h1>Aplikasi Kasir Online Sederhana 💰</h1>
+    
+    <div class="logo-container">
+        <img src="url-gambar-logo-anda.png" alt="Logo Toko" class="app-logo">
+    </div>
+
+    <div id="input-produk">
+        <h2>Tambah Produk</h2>
+        <label for="nama-produk">Nama Produk:</label>
+        <input type="text" id="nama-produk" placeholder="Masukkan nama produk" required><br><br>
+
+        <label for="harga-produk">Harga (Rp):</label>
+        <input type="number" id="harga-produk" min="1" value="0" required><br><br>
+
+        <button id="tambah-produk-btn">Tambahkan ke Keranjang</button>
+    </div>
+
+    <hr>
+
+    <div id="keranjang">
+        <h2>Keranjang Belanja</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama Produk</th>
+                    <th>Harga Satuan</th>
+                    <th>Jumlah</th>
+                    <th>Subtotal</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="item-keranjang">
+                </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <div id="total-section">
+        <h2>Total Bayar: <span id="total-harga">Rp 0</span></h2>
+        <button id="bayar-btn">Bayar Sekarang</button>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Aplikasi Kasir Sederhana | Developed by 1.WEZA SAPUTRA 2.MOCH.FATKHULLOH C.J</p>
+    </footer>
+
+    <script src="script.js"></script> 
+</body>
+</html>
