@@ -122,3 +122,91 @@ document.addEventListener('DOMContentLoaded', () => {
     // Panggil fungsi untuk menambahkan produk default saat halaman dimuat
     tambahProdukDefault();
 });
+// ... (Kode JavaScript sebelumnya: updateTotal, handleQuantityChange, addProductRow, tambahProdukDefault) ...
+
+// Pastikan Anda juga mendefinisikan elemen-elemen ini di awal file script.js
+// const itemKeranjangBody = document.getElementById('item-keranjang');
+// const totalHargaSpan = document.getElementById('total-harga');
+const strukContainer = document.getElementById('struk-container');
+const developerInfo = document.querySelector('footer p').textContent; // Ambil info developer dari footer
+
+// Event Listener untuk tombol "Bayar Sekarang"
+bayarBtn.addEventListener('click', () => {
+    const totalText = totalHargaSpan.textContent;
+
+    if (totalText === 'Rp 0') {
+        alert("Keranjang belanja masih kosong!");
+        return;
+    }
+    
+    // 1. Buat Konten Struk
+    let strukHTML = `
+        <div class="struk">
+            <h3 style="text-align: center;">--- STRUK PEMBAYARAN ---</h3>
+            <p style="text-align: center;">Toko Kasir Sederhana</p>
+            <p style="text-align: center;">Tanggal: ${new Date().toLocaleDateString('id-ID')}</p>
+            <p>---------------------------------</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Item</th>
+                        <th style="text-align: right;">Jml</th>
+                        <th style="text-align: right;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+    
+    // Ambil data dari setiap baris di keranjang
+    const itemRows = itemKeranjangBody.querySelectorAll('tr');
+    itemRows.forEach(row => {
+        const nama = row.cells[0].textContent;
+        const jumlah = row.querySelector('.quantity-input').value;
+        const subtotal = row.querySelector('.subtotal-item').textContent;
+
+        // Tambahkan ke HTML struk
+        strukHTML += `
+            <tr>
+                <td style="text-align: left;">${nama}</td>
+                <td style="text-align: right;">${jumlah}</td>
+                <td style="text-align: right;">${subtotal}</td>
+            </tr>
+        `;
+    });
+
+    // Selesaikan struktur struk
+    strukHTML += `
+                </tbody>
+            </table>
+            <p>---------------------------------</p>
+            <p style="font-weight: bold;">TOTAL BAYAR: <span style="float: right;">${totalText}</span></p>
+            <p>---------------------------------</p>
+            <p style="text-align: center;">Terima kasih telah berbelanja!</p>
+            <p style="text-align: center; font-size: 0.8em;">${developerInfo}</p>
+        </div>
+    `;
+
+    // 2. Tampilkan dan Cetak
+    strukContainer.innerHTML = strukHTML;
+    
+    // Tampilkan struk (sebenarnya hanya diperlukan agar window.print bisa melihatnya)
+    strukContainer.style.display = 'block'; 
+
+    // Panggil dialog cetak/print
+    window.print();
+    
+    // 3. Bersihkan Struk dan Keranjang Setelah Cetak
+    // (Gunakan timeout agar tidak langsung membersihkan sebelum cetak)
+    setTimeout(() => {
+        strukContainer.style.display = 'none'; // Sembunyikan lagi
+        strukContainer.innerHTML = '';
+        itemKeranjangBody.innerHTML = ''; // Kosongkan keranjang
+        updateTotal(); // Reset total
+    }, 100); 
+
+    // alert(`Total yang harus dibayar adalah: ${totalText}. Struk sedang dicetak.`);
+});
+
+// Pastikan panggilan tambahProdukDefault() dan updateTotal() ada di akhir file:
+// tambahProdukDefault();
+// updateTotal();
