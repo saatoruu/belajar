@@ -1,50 +1,52 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Profil Digital - Weza Saputra</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  </head>
-  <body>
-    <div class="kartu-profil">
-        <img src="foto_baru.jpeg" alt="foto profil saya">
-        <h1>WEZA SAPUTRA</h1>
-        <p>Siswa SMK yang tertarik dengan teknologi dan desain.
-        Selamat datang di website pertama saya!</p>
-        
-        <h2>Minat & Keahlian</h2>
-        <ul class="minat-list">
-            <li><i class="fas fa-code"></i> Pengembangan Web (HTML & CSS)</li>
-            <li><i class="fas fa-laptop-code"></i> Desain UI/UX Dasar</li>
-            <li><i class="fas fa-microchip"></i> Hardware dan Jaringan Komputer</li>
-        </ul>
-        
-        <h2>Soft Skill</h2>
-        <div class="skill-grid">
-            <span class="skill-badge"><i class="fas fa-users"></i> Kerja Tim</span>
-            <span class="skill-badge"><i class="fas fa-lightbulb"></i> Problem Solving</span>
-            <span class="skill-badge"><i class="fas fa-comments"></i> Komunikasi Baik</span>
-            <span class="skill-badge"><i class="fas fa-clock"></i> Manajemen Waktu</span>
-        </div>
-        
-        <h2>Tujuan Karir</h2>
-        <ol class="tujuan-list">
-            <li>Lulus SMK dengan keahlian praktik yang mumpuni di bidang IT.</li>
-            <li>Menjadi *Junior Front-End Developer* yang handal.</li>
-            <li>Menciptakan aplikasi web sederhana yang bermanfaat.</li>
-        </ol>
-        
-        <div class="link-container">
-            <a href="https://www.instagram.com/weza1_33?igsh=NHkzd3Vncm54bDFv" target="_blank"> Kunjungi Instagram Saya! </a>
-            <button id="sapaButton"> Sapa Saya! </button>
-        </div>
-        
-    </div>
-    
-    <footer>
-        <p>&copy; 2025 Weza Saputra. Dibuat dengan &lt;/&gt; dan semangat belajar.</p>
-    </footer>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Kasir Interaktif</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
 
-    <script src="script.js"></script>
-  </body>
+    <h1>Aplikasi Kasir Online Sederhana 💰</h1>
+
+    <div id="input-produk">
+        <h2>Tambah Produk</h2>
+        <label for="nama-produk">Nama Produk:</label>
+        <input type="text" id="nama-produk" placeholder="Masukkan nama produk" required><br><br>
+
+        <label for="harga-produk">Harga (Rp):</label>
+        <input type="number" id="harga-produk" min="1" value="0" required><br><br>
+
+        <button id="tambah-produk-btn">Tambahkan ke Keranjang</button>
+    </div>
+
+    <hr>
+
+    <div id="keranjang">
+        <h2>Keranjang Belanja</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama Produk</th>
+                    <th>Harga Satuan</th>
+                    <th>Jumlah</th>
+                    <th>Subtotal</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="item-keranjang">
+                </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <div id="total-section">
+        <h2>Total Bayar: <span id="total-harga">Rp 0</span></h2>
+        <button id="bayar-btn">Bayar Sekarang</button>
+    </div>
+
+    <script src="script.js"></script> 
+</body>
 </html>
