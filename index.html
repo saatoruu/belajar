@@ -3,121 +3,409 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Kasir Interaktif</title>
-    <link rel="stylesheet" href="style.css"> 
+    <title>HydroTech - Shopping Teknologi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
-    <h1>Aplikasi Kasir Online Sederhana 💰</h1>
-    
-    <div class="logo-container">
-        <img src="url-gambar-logo-anda.png" alt="Logo Toko" class="app-logo">
+    <!-- Developer Login Modal -->
+    <div id="devLoginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Developer Login</h2>
+            <form id="devLoginForm">
+                <div class="form-group">
+                    <label for="devUsername">Username:</label>
+                    <input type="text" id="devUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="devPassword">Password:</label>
+                    <input type="password" id="devPassword" required>
+                </div>
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+        </div>
     </div>
 
-    <div id="input-produk">
-        <h2>Tambah Produk</h2>
-        <label for="nama-produk">Nama Produk:</label>
-        <input type="text" id="nama-produk" placeholder="Masukkan nama produk" required><br><br>
-
-        <label for="harga-produk">Harga (Rp):</label>
-        <input type="number" id="harga-produk" min="1" value="0" required><br><br>
-
-        <button id="tambah-produk-btn">Tambahkan ke Keranjang</button>
+    <!-- Developer Panel -->
+    <div id="devPanel" class="dev-panel">
+        <div class="dev-panel-header">
+            <h3>Developer Panel</h3>
+            <button id="closeDevPanel" class="btn-close">&times;</button>
+        </div>
+        <div class="dev-panel-content">
+            <div class="form-group">
+                <label for="productSelect">Pilih Produk:</label>
+                <select id="productSelect"></select>
+            </div>
+            <div class="form-group">
+                <label for="newPrice">Harga Baru:</label>
+                <input type="number" id="newPrice">
+            </div>
+            <button id="updatePrice" class="btn-primary">Update Harga</button>
+            <hr>
+            <h4>Tambah Produk Baru</h4>
+            <form id="addProductForm">
+                <div class="form-group">
+                    <label for="newProductName">Nama Produk:</label>
+                    <input type="text" id="newProductName" required>
+                </div>
+                <div class="form-group">
+                    <label for="newProductPrice">Harga:</label>
+                    <input type="number" id="newProductPrice" required>
+                </div>
+                <div class="form-group">
+                    <label for="newProductCategory">Kategori:</label>
+                    <select id="newProductCategory">
+                        <option value="hardware">Hardware</option>
+                        <option value="network">Network</option>
+                        <option value="accessories">Accessories</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="newProductImage">URL Gambar:</label>
+                    <input type="text" id="newProductImage" required>
+                </div>
+                <button type="submit" class="btn-primary">Tambah Produk</button>
+            </form>
+        </div>
     </div>
 
-    <hr>
-
-    <div id="keranjang">
-        <h2>Keranjang Belanja</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nama Produk</th>
-                    <th>Harga Satuan</th>
-                    <th>Jumlah</th>
-                    <th>Subtotal</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="item-keranjang">
-                </tbody>
-        </table>
+    <!-- Shopping Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content cart-modal">
+            <span class="close-cart">&times;</span>
+            <h2>Keranjang Belanja</h2>
+            <div class="cart-content">
+                <div id="cart-items" class="cart-items">
+                    <!-- Cart items will be added here -->
+                </div>
+                <div class="cart-empty" id="cart-empty">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Keranjang belanja kosong</p>
+                    <a href="#products" class="btn-primary">Jelajahi Produk</a>
+                </div>
+                <div class="cart-summary" id="cart-summary">
+                    <div class="cart-total">
+                        <strong>Total: <span id="cart-total-amount">Rp 0</span></strong>
+                    </div>
+                    <button id="checkout-btn" class="btn-primary">Lanjut ke Pembayaran</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <hr>
-
-    <div id="total-section">
-        <h2>Total Bayar: <span id="total-harga">Rp 0</span></h2>
-        <button id="bayar-btn">Bayar Sekarang</button>
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-payment">&times;</span>
+            <h2>Pembayaran</h2>
+            <div class="payment-summary">
+                <h3>Ringkasan Pesanan</h3>
+                <div id="payment-items">
+                    <!-- Items will be added here -->
+                </div>
+                <div class="payment-total">
+                    <strong>Total: <span id="payment-total-amount">Rp 0</span></strong>
+                </div>
+            </div>
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label for="paymentMethod">Metode Pembayaran:</label>
+                    <select id="paymentMethod" required>
+                        <option value="">Pilih Metode</option>
+                        <option value="bank">Transfer Bank</option>
+                        <option value="credit">Kartu Kredit</option>
+                        <option value="ewallet">E-Wallet</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cardNumber">Nomor Kartu:</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                </div>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="expiryDate">Tanggal Kadaluarsa:</label>
+                        <input type="text" id="expiryDate" placeholder="MM/YY">
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV:</label>
+                        <input type="text" id="cvv" placeholder="123">
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Bayar Sekarang</button>
+            </form>
+        </div>
     </div>
-    
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-water"></i>
+                <h1>HydroTech</h1>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#products" class="nav-link">Produk</a></li>
+                    <li><a href="#developer" class="nav-link">Developer</a></li>
+                    <li><a href="#profile" class="nav-link">Profil</a></li>
+                    <li><a href="#contact" class="nav-link">Kontak</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button id="devAccess" class="btn-secondary">Admin</button>
+                    <button id="cartBtn" class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+            </nav>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Parallax Background Elements -->
+    <div class="parallax-bg">
+        <div class="parallax-layer layer-1" data-speed="0.1"></div>
+        <div class="parallax-layer layer-2" data-speed="0.3"></div>
+        <div class="parallax-layer layer-3" data-speed="0.5"></div>
+        <div class="parallax-layer layer-4" data-speed="0.7"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="section fade-in">
+            <div class="container">
+                <div class="hero">
+                    <div class="hero-content">
+                        <h2>Selamat Datang di <span class="highlight">HydroTech</span></h2>
+                        <p>Toko teknologi terdepan dengan sentuhan elegan Archon Hydro, Furina. Temukan produk teknologi terbaik dengan kualitas yang mengalir seperti air.</p>
+                        <a href="#products" class="btn-primary">Jelajahi Produk</a>
+                    </div>
+                    <div class="hero-image">
+                        <div class="water-effect"></div>
+                    </div>
+                </div>
+
+                <div class="recommended-section">
+                    <h3>Produk Rekomendasi</h3>
+                    <div class="products-grid" id="recommended-products">
+                        <!-- Recommended products will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="quotes-section">
+                    <h3>Quotes Teknologi</h3>
+                    <div class="quotes-slider">
+                        <div class="quote active">
+                            <p>"Technology is best when it brings people together." - Matt Mullenweg</p>
+                        </div>
+                        <div class="quote">
+                            <p>"The advance of technology is based on making it fit in so that you don't really even notice it, so it's part of everyday life." - Bill Gates</p>
+                        </div>
+                        <div class="quote">
+                            <p>"It's not a faith in technology. It's faith in people." - Steve Jobs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="section fade-in">
+            <div class="container">
+                <h2>Produk Kami</h2>
+                <div class="category-filter">
+                    <button class="category-btn active" data-category="all">Semua</button>
+                    <button class="category-btn" data-category="hardware">Hardware</button>
+                    <button class="category-btn" data-category="network">Network</button>
+                    <button class="category-btn" data-category="accessories">Accessories</button>
+                </div>
+                <div class="products-grid" id="products-grid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Developer Section -->
+        <section id="developer" class="section fade-in">
+            <div class="container">
+                <h2>Portal Developer</h2>
+                <div class="developer-intro">
+                    <p>HydroTech dikembangkan oleh tim developer berpengalaman yang berdedikasi untuk memberikan pengalaman belanja teknologi terbaik.</p>
+                </div>
+                
+                <div class="developer-profiles">
+                    <div class="developer-card">
+                        <div class="dev-avatar">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>fatkul.dev</h3>
+                        <p>Full Stack Developer</p>
+                        <div class="dev-skills">
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Node.js</span>
+                        </div>
+                        <p class="dev-bio">Spesialis dalam pengembangan aplikasi web modern dengan fokus pada user experience.</p>
+                    </div>
+                    
+                    <div class="developer-card">
+                        <div class="dev-avatar">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>weza.dev</h3>
+                        <p>Backend Developer</p>
+                        <div class="dev-skills">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Django</span>
+                            <span class="skill-tag">Database</span>
+                        </div>
+                        <p class="dev-bio">Ahli dalam arsitektur sistem dan pengembangan backend yang scalable dan efisien.</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h3>Total Produk</h3>
+                        <p class="stat-number" id="total-products">25</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Barang Terjual</h3>
+                        <p class="stat-number" id="sold-items">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Pendapatan</h3>
+                        <p class="stat-number" id="revenue">Rp 0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Pengguna Aktif</h3>
+                        <p class="stat-number" id="active-users">1,247</p>
+                    </div>
+                </div>
+                
+                <div class="dashboard-content">
+                    <div class="sales-chart">
+                        <h3>Statistik Penjualan</h3>
+                        <div class="chart-container">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="recent-activity">
+                        <h3>Aktivitas Terbaru</h3>
+                        <div id="recent-activities">
+                            <!-- Recent activities will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="section fade-in">
+            <div class="container">
+                <h2>Profil Pengguna</h2>
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="profile-name">Nama Pengguna</h3>
+                            <p id="profile-email">email@example.com</p>
+                        </div>
+                    </div>
+                    <div class="profile-details">
+                        <div class="detail-item">
+                            <label>Email Login:</label>
+                            <p id="profile-login-email">user@hydrotech.com</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Telepon:</label>
+                            <p id="profile-phone">+62 812-3456-7890</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Bergabung Sejak:</label>
+                            <p id="profile-join-date">Januari 2023</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Status:</label>
+                            <p id="profile-status">Aktif</p>
+                        </div>
+                    </div>
+                    <button class="btn-primary" id="edit-profile">Edit Profil</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section fade-in">
+            <div class="container">
+                <h2>Kontak Developer</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Telepon</h3>
+                            <p>+62 812-3456-7890</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>developer@hydrotech.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Alamat</h3>
+                            <p>Jl. Teknologi No. 123, Jakarta</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Kirim Pesan</h3>
+                    <form id="messageForm">
+                        <div class="form-group">
+                            <label for="messageName">Nama:</label>
+                            <input type="text" id="messageName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="messageEmail">Email:</label>
+                            <input type="email" id="messageEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="messageContent">Pesan:</label>
+                            <textarea id="messageContent" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Aplikasi Kasir Sederhana | Developed by 1.WEZA SAPUTRA 2.MOCH.FATKHULLOH C.J</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-water"></i>
+                    <h2>HydroTech</h2>
+                </div>
+                <p class="footer-quote">"Air mengalir dalam setiap ciptaan, menghidupi dunia dengan keanggunan dan kekuatan - Furina"</p>
+                <p class="footer-copyright">© 2025 HydroTech - Semua Karya Sapa</p>
+            </div>
+        </div>
     </footer>
 
-    <script src="script.js"></script> 
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Kasir Interaktif</title>
-    <link rel="stylesheet" href="style.css"> 
-</head>
-<body>
-
-    <div id="main-content"> 
-        <h1>Aplikasi Kasir Online Sederhana 💰</h1>
-        
-        <div class="logo-container">
-            <img src="url-gambar-logo-anda.png" alt="Logo Toko" class="app-logo">
-        </div>
-
-        <div id="input-produk">
-            <h2>Tambah Produk</h2>
-            <label for="nama-produk">Nama Produk:</label>
-            <input type="text" id="nama-produk" placeholder="Masukkan nama produk" required><br><br>
-
-            <label for="harga-produk">Harga (Rp):</label>
-            <input type="number" id="harga-produk" min="1" value="0" required><br><br>
-
-            <button id="tambah-produk-btn">Tambahkan ke Keranjang</button>
-        </div>
-
-        <hr>
-
-        <div id="keranjang">
-            <h2>Keranjang Belanja</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nama Produk</th>
-                        <th>Harga Satuan</th>
-                        <th>Jumlah</th>
-                        <th>Subtotal</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="item-keranjang">
-                    </tbody>
-            </table>
-        </div>
-
-        <hr>
-
-        <div id="total-section">
-            <h2>Total Bayar: <span id="total-harga">Rp 0</span></h2>
-            <button id="bayar-btn">Bayar Sekarang</button>
-        </div>
-        
-        <footer>
-            <p>&copy; 2025 Aplikasi Kasir Sederhana | Developed by 1.WEZA SAPUTRA 2.MOCH.FATKHULLOH C.J</p>
-        </footer>
-    </div> <div id="struk-container" style="display: none;">
-        </div>
-
-    <script src="script.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
