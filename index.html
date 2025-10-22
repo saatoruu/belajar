@@ -409,3 +409,36 @@
     <script src="script.js"></script>
 </body>
 </html>
+<header>
+    <div class="container">
+        <a href="#home" class="logo-link"> <div class="logo">
+                <i class="fas fa-water"></i>
+                <h1>HydroTech</h1>
+            </div>
+        </a>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#products" class="nav-link">Produk</a></li>
+                <li><a href="#developer" class="nav-link">Developer</a></li>
+                <li><a href="#profile" class="nav-link">Profil</a></li>
+                <li><a href="#contact" class="nav-link">Kontak</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div id="user-info" class="user-info" style="display: none;">
+                    <span id="user-greeting">Halo, User!</span>
+                    <button id="user-logout" class="btn-secondary btn-sm">Logout</button>
+                </div>
+                <button id="userLoginBtn" class="btn-secondary">Login</button>
+                <button id="adminAccess" class="btn-secondary" style="display: none;">Admin</button>
+                <button id="cartBtn" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </nav>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
