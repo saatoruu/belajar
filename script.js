@@ -740,10 +740,6 @@ document.addEventListener('click', function(e) {
 
 });
 
-// ----------------------------------------------------------------------
-// MODIFIKASI DIMULAI DI SINI (Memastikan penambahan 1 item per klik)
-// ----------------------------------------------------------------------
-
 // Add to Cart dengan require login
 function addToCart(productId) {
     if (!currentUser) {
@@ -754,8 +750,8 @@ function addToCart(productId) {
 
     const product = products.find(p => p.id === productId);
     if (product) {
-        // HANYA MENAMBAHKAN SATU INSTANS PRODUK KE ARRAY CART (SESUAI PERMINTAAN)
-        cart.push(product);
+        // Baris ini HANYA menambahkan satu instans produk per klik/panggilan fungsi.
+        cart.push(product); 
         updateCartDisplay();
         showNotification(`${product.name} ditambahkan ke keranjang`);
         addRecentActivity('cart', `${product.name} ditambahkan ke keranjang`);
@@ -783,10 +779,6 @@ function buyNow(productId) {
     }
 
 }
-
-// ----------------------------------------------------------------------
-// MODIFIKASI SELESAI DI SINI
-// ----------------------------------------------------------------------
 
 // Setup Cart Event Listeners
 function setupCartEventListeners() {
@@ -888,7 +880,8 @@ function setupCartItemEventListeners() {
         if (e.target.classList.contains('increase-btn') || e.target.closest('.increase-btn')) {
             const button = e.target.classList.contains('increase-btn') ? e.target : e.target.closest('.increase-btn');
             const productId = parseInt(button.getAttribute('data-id'));
-            addToCart(productId); // Menambah 1 item
+            // Memanggil addToCart() yang hanya menambah 1 item
+            addToCart(productId); 
         }
 
         // Decrease quantity
@@ -912,7 +905,7 @@ function setupCartItemEventListeners() {
 function decreaseCartQuantity(productId) {
     const itemIndex = cart.findIndex(item => item.id === productId);
     if (itemIndex !== -1) {
-        cart.splice(itemIndex, 1); // Menghapus 1 instans produk dari keranjang
+        cart.splice(itemIndex, 1);
         updateCartDisplay();
         showNotification('Jumlah produk dikurangi');
     }
