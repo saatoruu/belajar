@@ -202,3 +202,53 @@ header .container {
     from { opacity: 0; transform: translateY(-15px); }
     to { opacity: 1; transform: translateY(0); }
 }
+/* ==========================
+   EFEK 3D SUPER KEREN
+========================== */
+body {
+    perspective: 1200px;
+    overflow-x: hidden;
+}
+
+/* Efek hover 3D untuk kartu */
+.product-card, .developer-card {
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.product-card:hover, .developer-card:hover {
+    transform: rotateY(8deg) rotateX(4deg) scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 191, 255, 0.3);
+}
+
+/* Efek glow tombol 3D */
+.btn-primary, .btn-secondary {
+    transform: translateZ(0);
+    transition: all 0.4s ease;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    transform: translateY(-4px) scale(1.05) rotateX(3deg);
+    box-shadow: 0 6px 18px rgba(0, 191, 255, 0.5);
+}
+
+/* Efek 3D untuk header */
+header {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+}
+
+header.scrolled {
+    transform: translateZ(40px) rotateX(3deg);
+}
+
+/* Efek background gradasi 3D */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 30% 50%, #00bfff, #001f3f);
+    transform: translateZ(-300px) scale(2);
+    z-index: -2;
+    transition: transform 0.8s ease;
+}
