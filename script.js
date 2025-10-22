@@ -875,27 +875,53 @@ function renderCartItems() {
 
 // Setup Cart Item Event Listeners dengan event delegation
 function setupCartItemEventListeners() {
+    // MEMPERBAIKI MASALAH LONJAKAN KUANTITAS DI MODAL KERANJANG
     cartItemsContainer.addEventListener('click', function(e) {
-        // Increase quantity
-        if (e.target.classList.contains('increase-btn') || e.target.closest('.increase-btn')) {
-            const button = e.target.classList.contains('increase-btn') ? e.target : e.target.closest('.increase-btn');
-            const productId = parseInt(button.getAttribute('data-id'));
-            // Memanggil addToCart() yang hanya menambah 1 item
+        
+        // Cek jika yang diklik adalah tombol INCREASE (atau ikon di dalamnya)
+        let increaseButton = null;
+        if (e.target.classList.contains('increase-btn')) {
+            increaseButton = e.target;
+        } else if (e.target.closest('.increase-btn')) {
+            increaseButton = e.target.closest('.increase-btn');
+        }
+
+        if (increaseButton) {
+            const productId = parseInt(increaseButton.getAttribute('data-id'));
+            // Memanggil addToCart() yang hanya menambah 1 item.
             addToCart(productId); 
+            e.stopPropagation(); 
+            return;
         }
 
-        // Decrease quantity
-        if (e.target.classList.contains('decrease-btn') || e.target.closest('.decrease-btn')) {
-            const button = e.target.classList.contains('decrease-btn') ? e.target : e.target.closest('.decrease-btn');
-            const productId = parseInt(button.getAttribute('data-id'));
+        // Cek jika yang diklik adalah tombol DECREASE (atau ikon di dalamnya)
+        let decreaseButton = null;
+        if (e.target.classList.contains('decrease-btn')) {
+            decreaseButton = e.target;
+        } else if (e.target.closest('.decrease-btn')) {
+            decreaseButton = e.target.closest('.decrease-btn');
+        }
+
+        if (decreaseButton) {
+            const productId = parseInt(decreaseButton.getAttribute('data-id'));
             decreaseCartQuantity(productId);
+            e.stopPropagation();
+            return;
         }
 
-        // Remove item
-        if (e.target.classList.contains('remove-btn') || e.target.closest('.remove-btn')) {
-            const button = e.target.classList.contains('remove-btn') ? e.target : e.target.closest('.remove-btn');
-            const productId = parseInt(button.getAttribute('data-id'));
+        // Cek jika yang diklik adalah tombol REMOVE (atau ikon di dalamnya)
+        let removeButton = null;
+        if (e.target.classList.contains('remove-btn')) {
+            removeButton = e.target;
+        } else if (e.target.closest('.remove-btn')) {
+            removeButton = e.target.closest('.remove-btn');
+        }
+        
+        if (removeButton) {
+            const productId = parseInt(removeButton.getAttribute('data-id'));
             removeFromCart(productId);
+            e.stopPropagation();
+            return;
         }
     });
 
