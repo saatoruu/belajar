@@ -1,3 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HydroTech - Shopping Teknologi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- User Login Modal -->
+    <div id="userLoginModal" class="modal">
+        <div class="modal-content">
+            <span class="close close-user-login">&times;</span>
+            <h2>Login Pembeli</h2>
+            <div class="login-container">
+                <div class="login-tabs">
+                    <button class="login-tab active" data-tab="customer">Pembeli</button>
+                    <button class="login-tab" data-tab="admin">Admin</button>
+                </div>
+                
+                <!-- Pembeli Login -->
+                <div id="customer-login" class="login-content active">
+                    <div class="google-login-section">
+                        <h3>Login dengan Google</h3>
+                        <p>Masuk dengan akun Google untuk mulai berbelanja</p>
+                        <button id="customerGoogleLogin" class="google-login-btn">
+                            <i class="fab fa-google"></i>
+                            Login dengan Google
+                        </button>
+                    </div>
+                    <div class="divider">
+                        <span>atau</span>
+                    </div>
+                    <form id="customerLoginForm" class="login-form">
+                        <div class="form-group">
+                            <label for="customerEmail">Email:</label>
+                            <input type="email" id="customerEmail" placeholder="email@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerPassword">Password:</label>
+                            <input type="password" id="customerPassword" placeholder="Masukkan password" required>
+                        </div>
+                        <button type="submit" class="btn-primary btn-login">Login</button>
+                    </form>
+                    <div class="login-footer">
+                        <p>Belum punya akun? <a href="#" id="showRegister">Daftar di sini</a></p>
+                    </div>
+                </div>
+                
+                <!-- Admin Login -->
+                <div id="admin-login" class="login-content">
+                    <div class="google-login-section">
+                        <h3>Login Admin dengan Google</h3>
+                        <p>Masuk sebagai administrator toko</p>
+                        <button id="adminGoogleLogin" class="google-login-btn admin">
+                            <i class="fab fa-google"></i>
+                            Login Admin dengan Google
+                        </button>
+                    </div>
+                    <div class="divider">
+                        <span>atau login manual</span>
+                    </div>
+                    <form id="adminLoginForm" class="login-form">
+                        <div class="form-group">
+                            <label for="adminUsername">Username:</label>
+                            <input type="text" id="adminUsername" placeholder="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="adminPassword">Password:</label>
+                            <input type="password" id="adminPassword" placeholder="password" required>
+                        </div>
+                        <button type="submit" class="btn-primary btn-login">Login Admin</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Register Modal -->
+    <div id="userRegisterModal" class="modal">
+        <div class="modal-content">
+            <span class="close close-register">&times;</span>
+            <h2>Daftar Akun Baru</h2>
+            <form id="registerForm" class="login-form">
+                <div class="form-group">
+                    <label for="registerName">Nama Lengkap:</label>
+                    <input type="text" id="registerName" placeholder="Nama lengkap" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email:</label>
+                    <input type="email" id="registerEmail" placeholder="email@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">Nomor Telepon:</label>
+                    <input type="tel" id="registerPhone" placeholder="+62 812-3456-7890" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password:</label>
+                    <input type="password" id="registerPassword" placeholder="Minimal 8 karakter" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Konfirmasi Password:</label>
+                    <input type="password" id="registerConfirmPassword" placeholder="Ulangi password" required>
+                </div>
+                <button type="submit" class="btn-primary btn-login">Daftar</button>
+            </form>
+            <div class="login-footer">
+                <p>Sudah punya akun? <a href="#" id="showLogin">Login di sini</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Developer Panel -->
+    <div id="devPanel" class="dev-panel">
+        <div class="dev-panel-header">
+            <h3>Admin Panel</h3>
+            <button id="closeDevPanel" class="btn-close">&times;</button>
+        </div>
+        <div class="dev-panel-content">
+            <div class="admin-info">
+                <div class="admin-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h4 id="adminWelcome">Selamat Datang, Admin!</h4>
+            </div>
+            <div class="form-group">
+                <label for="productSelect">Pilih Produk:</label>
+                <select id="productSelect"></select>
+            </div>
+            <div class="form-group">
+                <label for="newPrice">Harga Baru:</label>
+                <input type="number" id="newPrice">
+            </div>
+            <button id="updatePrice" class="btn-primary">Update Harga</button>
+            <hr>
+            <h4>Tambah Produk Baru</h4>
+            <form id="addProductForm">
+                <div class="form-group">
+                    <label for="newProductName">Nama Produk:</label>
+                    <input type="text" id="newProductName" required>
+                </div>
+                <div class="form-group">
+                    <label for="newProductPrice">Harga:</label>
+                    <input type="number" id="newProductPrice" required>
+                </div>
+                <div class="form-group">
+                    <label for="newProductCategory">Kategori:</label>
+                    <select id="newProductCategory">
+                        <option value="hardware">Hardware</option>
+                        <option value="network">Network</option>
+                        <option value="accessories">Accessories</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="newProductImage">URL Gambar:</label>
+                    <input type="text" id="newProductImage" required>
+                </div>
+                <button type="submit" class="btn-primary">Tambah Produk</button>
+            </form>
+            <div class="admin-actions">
+                <button id="logoutAdmin" class="btn-secondary">Logout Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content cart-modal">
+            <span class="close-cart">&times;</span>
+            <h2>Keranjang Belanja</h2>
+            <div class="cart-content">
+                <div id="cart-items" class="cart-items">
+                    <!-- Cart items will be added here -->
+                </div>
+                <div class="cart-empty" id="cart-empty">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Keranjang belanja kosong</p>
+                    <button class="btn-primary" id="loginToShop">Login untuk Berbelanja</button>
+                </div>
+                <div class="cart-summary" id="cart-summary">
+                    <div class="cart-total">
+                        <strong>Total: <span id="cart-total-amount">Rp 0</span></strong>
+                    </div>
+                    <button id="checkout-btn" class="btn-primary">Lanjut ke Pembayaran</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-payment">&times;</span>
+            <h2>Pembayaran</h2>
+            <div class="payment-summary">
+                <h3>Ringkasan Pesanan</h3>
+                <div id="payment-items">
+                    <!-- Items will be added here -->
                 </div>
                 <div class="payment-total">
                     <strong>Total: <span id="payment-total-amount">Rp 0</span></strong>
@@ -48,7 +247,12 @@
                     <li><a href="#contact" class="nav-link">Kontak</a></li>
                 </ul>
                 <div class="nav-actions">
-                    <button id="devAccess" class="btn-secondary">Admin</button>
+                    <div id="user-info" class="user-info" style="display: none;">
+                        <span id="user-greeting">Halo, User!</span>
+                        <button id="user-logout" class="btn-secondary btn-sm">Logout</button>
+                    </div>
+                    <button id="userLoginBtn" class="btn-secondary">Login</button>
+                    <button id="adminAccess" class="btn-secondary" style="display: none;">Admin</button>
                     <button id="cartBtn" class="cart-btn">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count">0</span>
@@ -78,7 +282,10 @@
                     <div class="hero-content">
                         <h2>Selamat Datang di <span class="highlight">HydroTech</span></h2>
                         <p>Toko teknologi terdepan dengan sentuhan elegan Archon Hydro, Furina. Temukan produk teknologi terbaik dengan kualitas yang mengalir seperti air.</p>
-                        <a href="#products" class="btn-primary">Jelajahi Produk</a>
+                        <div class="hero-actions">
+                            <a href="#products" class="btn-primary">Jelajahi Produk</a>
+                            <button id="heroLoginBtn" class="btn-secondary">Login untuk Belanja</button>
+                        </div>
                     </div>
                     <div class="hero-image">
                         <div class="water-effect"></div>
@@ -130,7 +337,7 @@
             <div class="container">
                 <h2>Portal Developer</h2>
                 <div class="developer-intro">
-                    <p>HydroTech dikembangkan oleh tim developer berpengalaman yang berdedikasi untuk memberikan pengalaman belanja teknologi terbaik.</p>
+                    <p>hyrotech hadir untuk memudahkah para konsumen unuk mencari produk bagus,berkualitas tinggi,dengan harga terjangkau.</p>
                 </div>
                 
                 <div class="developer-profiles">
@@ -139,13 +346,13 @@
                             <i class="fas fa-code"></i>
                         </div>
                         <h3>fatkul.dev</h3>
-                        <p>Full Stack Developer</p>
+                        <p>Newbie Developer</p>
                         <div class="dev-skills">
                             <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Admin Panel</span>
                             <span class="skill-tag">Node.js</span>
                         </div>
-                        <p class="dev-bio">Spesialis dalam pengembangan aplikasi web modern dengan fokus pada user experience.</p>
+                        <p class="dev-bio">Siswa Kelas 11 dari SMKN 1 SEMEN KAB KEDIRI.</p>
                     </div>
                     
                     <div class="developer-card">
@@ -153,13 +360,13 @@
                             <i class="fas fa-laptop-code"></i>
                         </div>
                         <h3>weza.dev</h3>
-                        <p>Backend Developer</p>
+                        <p>Newbie Developer</p>
                         <div class="dev-skills">
                             <span class="skill-tag">Python</span>
                             <span class="skill-tag">Django</span>
                             <span class="skill-tag">Database</span>
                         </div>
-                        <p class="dev-bio">Ahli dalam arsitektur sistem dan pengembangan backend yang scalable dan efisien.</p>
+                        <p class="dev-bio">Siswa Kelas 11 dari SMKN 1 SEMEN KAB KEDIRI.</p>
                     </div>
                 </div>
 
@@ -178,7 +385,7 @@
                     </div>
                     <div class="stat-card">
                         <h3>Pengguna Aktif</h3>
-                        <p class="stat-number" id="active-users">1,247</p>
+                        <p class="stat-number" id="active-users">2</p>
                     </div>
                 </div>
                 
@@ -245,22 +452,61 @@
                         <i class="fas fa-phone"></i>
                         <div>
                             <h3>Telepon</h3>
-                            <p>+62 812-3456-7890</p>
+                            <p>+62 852-3357-3962</p>
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
                         <div>
                             <h3>Email</h3>
-                            <p>developer@hydrotech.com</p>
+                            <p>wezasaputra7@gmail.com</p>
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
                             <h3>Alamat</h3>
-                            <p>Jl. Teknologi No. 123, Jakarta</p>
+                            <p>Ex.SDN Semen Kab Kediri </p>
                         </div>
                     </div>
                 </div>
                 <div class="contact-form">
+                    <h3>Kirim Pesan</h3>
+                    <form id="messageForm">
+                        <div class="form-group">
+                            <label for="messageName">Nama:</label>
+                            <input type="text" id="messageName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="messageEmail">Email:</label>
+                            <input type="email" id="messageEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="messageContent">Pesan:</label>
+                            <textarea id="messageContent" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-water"></i>
+                    <h2>HydroTech</h2>
+                </div>
+                <p class="footer-quote">"Air mengalir dalam setiap ciptaan, menghidupi dunia dengan keanggunan dan kekuatan - Furina"</p>
+                <p class="footer-copyright">© 2025 HydroTech - Semua Karya Mengalir Seperti Air</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
