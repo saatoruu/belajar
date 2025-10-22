@@ -983,3 +983,46 @@ function setupEventListeners() {
     
     // ... (event listeners lainnya tetap sama) ...
 }
+// Dapatkan elemen link logo yang baru dibuat
+const logoLink = document.querySelector('.logo-link');
+
+// Fungsi untuk menangani scroll
+function scrollToHome(event) {
+    // Mencegah perilaku default link (yang biasanya langsung melompat tanpa animasi)
+    event.preventDefault();
+
+    // Dapatkan elemen target (section #home)
+    const targetSection = document.getElementById('home');
+
+    if (targetSection) {
+        // Menggunakan smooth scroll. Ini adalah cara modern dan lebih disukai.
+        targetSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start' // Posisikan di bagian atas view
+        });
+        
+        // Opsional: Perbarui URL hash tanpa memicu navigasi penuh
+        window.history.pushState(null, null, '#home');
+    }
+}
+
+// Tambahkan event listener pada link logo
+if (logoLink) {
+    logoLink.addEventListener('click', scrollToHome);
+}
+
+// Tambahkan smooth scroll ke semua link navigasi
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+             target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+            window.history.pushState(null, null, this.getAttribute('href'));
+        }
+    });
+});
