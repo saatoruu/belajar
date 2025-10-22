@@ -1227,3 +1227,25 @@ footer {
         margin: 0 auto;
     }
 }
+/* Tambahkan ini ke file style.css Anda */
+.logo-link {
+    text-decoration: none; /* Menghilangkan garis bawah tautan */
+    color: inherit;      /* Memastikan warna teks di dalam logo tetap sama */
+    display: flex;       /* Memastikan link berfungsi seperti elemen block/flex */
+    align-items: center; /* Untuk menyejajarkan konten */
+}
+
+.logo-link:hover, .logo-link:focus {
+    opacity: 0.9; /* Efek visual saat kursor di atas logo */
+}
+
+/* Pastikan logo dan h1 Anda tetap seperti semula */
+.logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer; /* Menandakan bahwa elemen ini dapat diklik */
+}
+
+.logo h1 {
+    margin-left: 10px; /* Jarak antara ikon dan teks */
+}
